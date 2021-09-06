@@ -10,16 +10,21 @@ public class Bedrijf extends Entiteit {
 
 	/**
 	 * @invar | eigenaar != null
-	 * @invar | eigenaar.eigendommen.contains(this)
-	 * 
-	 * @peerObject
 	 */
-	Entiteit eigenaar;
+	private Entiteit eigenaar;
+	
+	/**
+	 * @invar getEigenaarInternal().getEigendommenInternal().contains(this)
+	 * 
+	 * @post | result != null
+	 * @peerObject (package-level)
+	 */
+	Entiteit getEigenaarInternal() { return eigenaar; }
 	
 	/**
 	 * @peerObject
 	 */
-	public Entiteit getEigenaar() { return eigenaar; }
+	public Entiteit getEigenaar() { return getEigenaarInternal(); }
 	
 	/**
 	 * @pre | eigenaar != null
@@ -29,7 +34,7 @@ public class Bedrijf extends Entiteit {
 	 */
 	public Bedrijf(Entiteit eigenaar) {
 		this.eigenaar = eigenaar;
-		eigenaar.eigendommen.add(this);
+		eigenaar.addEigendom(this);
 	}
 	
 	/**
@@ -46,9 +51,9 @@ public class Bedrijf extends Entiteit {
 		if (nieuweEigenaar == eigenaar)
 			throw new IllegalArgumentException("`nieuweEigenaar` is al eigenaar");
 		
-		eigenaar.eigendommen.remove(this);
+		eigenaar.removeEigendom(this);
 		eigenaar = nieuweEigenaar;
-		eigenaar.eigendommen.add(this);
+		eigenaar.addEigendom(this);
 	}
 	
 	@Override
