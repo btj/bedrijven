@@ -19,6 +19,7 @@ public abstract class Entiteit {
 	final Set<Bedrijf> eigendommen = new HashSet<>();
 	
 	/**
+	 * @creates | result
 	 * @peerObjects
 	 */
 	public Set<Bedrijf> getEigendommen() { return Set.copyOf(eigendommen); }
